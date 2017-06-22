@@ -1,0 +1,203 @@
+﻿{% extends 'base.html' %}
+{% block title %}关于自己{% endblock %}
+{% load staticfiles %}
+{% block css %}
+    <link href="{% static 'css/about.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <div class="blog-container">
+            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="/" title="网站首页">网站首页</a>
+                <a><cite>关于本站</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="layui-tab layui-tab-brief shadow" lay-filter="tabAbout">
+                    <ul class="layui-tab-title">
+                        <li lay-id="1">关于博客</li>
+                        <li lay-id="2">关于作者</li>
+                        <li lay-id="3" id="frinedlink">友情链接</li>
+                        <li lay-id="4">留言墙</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="/static/images/Logo_100.png" alt="好学长" />
+                                </div>
+                                <p class="aboutinfo-nickname">何佳豪个人站点</p>
+                                <p class="aboutinfo-introduce">努力学习，慢慢折腾</p>
+                                <p class="aboutinfo-location"><i class="fa fa-link"></i>&nbsp;&nbsp;<a target="_blank" href="http://www.github.com/haoxuezhang">www.github.com/haoxuezhang</a></p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <a target="_blank" title="网站首页" href="/"><i class="fa fa-home fa-2x" style="font-size:2.5em;position:relative;top:3px"></i></a>
+                                    <a target="_blank" title="文章专栏" href="/article"><i class="fa fa-file-text fa-2x"></i></a>
+                                    <a target="_blank" title="资源分享" href="/resource"><i class="fa fa-tags fa-2x"></i></a>
+                                    <!--<a target="_blank" title="点点滴滴" href="timeline.html"><i class="fa fa-hourglass-half fa-2x"></i></a>-->
+                                </div>
+
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>简介</legend>
+                                    <div class="layui-field-box aboutinfo-abstract">
+                                        {{aboutme.blockcontent|safe}}
+                                        <h3 style="text-align:center;">The End</h3>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--关于网站End-->
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="/static/images/Absolutely.jpg" alt="Absolutely" />
+                                </div>
+                                <p class="aboutinfo-nickname">好学长</p>
+                                <p class="aboutinfo-introduce">懂点.NET,热爱机器学习/爬虫/web</p>
+                                <p class="aboutinfo-location"><i class="fa fa-location-arrow"></i>&nbsp;湖北 - 武汉</p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <!--<a target="_blank" title="QQ交流" href="javascript:layer.msg('启动QQ会话窗口')"><i class="fa fa-qq fa-2x"></i></a>-->
+                                    <a target="_blank" title="给我写信" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=jiahaohe_123@163.com"><i class="fa fa-envelope fa-2x"></i></a>
+                                    <a target="_blank" title="新浪微博" href="http://weibo.com/u/2946937581"><i class="fa fa-weibo fa-2x"></i></a>
+                                    <a target="_blank" title="仓库" href="https://github.com/haoxuezhang"><i class="fa fa-git fa-2x"></i></a>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>简介</legend>
+                                    <div class="layui-field-box aboutinfo-abstract abstract-bloger">
+                                        <p style="text-align:center;">{{aboutme.content|safe}}</p>
+                                        <!--<h1>个人信息</h1>-->
+                                        <!--<p>暂无</p>-->
+                                        <!--<h1>个人介绍</h1>-->
+                                        <!--<p>一个没有故事的男同学，没什么介绍......</p>-->
+                                        <h3 style="text-align:center;">The End</h3>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--关于作者End-->
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="/static/images/handshake.png" alt="友情链接" />
+                                </div>
+                                <p class="aboutinfo-nickname">友情链接</p>
+                                <p class="aboutinfo-introduce">Name：好学长&nbsp;&nbsp;&nbsp;&nbsp;Site：www.××××××.cn</p>
+                                <p class="aboutinfo-location">
+                                    <i class="fa fa-close"></i>经常宕机&nbsp;
+                                    <i class="fa fa-close"></i>不合法规&nbsp;
+                                    <i class="fa fa-close"></i>插边球站&nbsp;
+                                    <i class="fa fa-close"></i>红标报毒&nbsp;
+                                    <i class="fa fa-check"></i>原创优先&nbsp;
+                                    <i class="fa fa-check"></i>技术优先
+                                </p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <p style="font-size:2em;">互换友链，携手并进！</p>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>Friend Link</legend>
+                                    <div class="layui-field-box">
+                                        <ul class="friendlink">
+                                            {% for link in link_list %}
+                                            <li>
+                                                <a target="_blank" href="{{link.url}}" title="Layui" class="friendlink-item">
+                                                    <p class="friendlink-item-pic"><img src="{{MEDIA_URL}}{{link.image}}" alt="Layui" /></p>
+                                                    <p class="friendlink-item-title">{{link.name}}</p>
+                                                    <p class="friendlink-item-domain">{{link.url}}</p>
+                                                </a>
+                                            </li>
+                                            {% endfor %}
+                                            <!--<li>-->
+                                                <!--<a target="_blank" href="http://www.pagemark.cn/" title="页签" class="friendlink-item">-->
+                                                    <!--<p class="friendlink-item-pic"><img src="http://pm.lyblogs.cn/Images/logo-png.png" alt="页签" /></p>-->
+                                                    <!--<p class="friendlink-item-title">页签</p>-->
+                                                    <!--<p class="friendlink-item-domain">pagemark.cn</p>-->
+                                                <!--</a>-->
+                                            <!--</li>-->
+                                        </ul>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--友情链接End-->
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="/static/images/messagewall.png" alt="留言墙" />
+                                </div>
+                                <p class="aboutinfo-nickname">留言墙</p>
+                                <!--<p class="aboutinfo-introduce">本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！</p>-->
+                                <p class="aboutinfo-introduce">留言功能正在开发中，如有问题请通过首页邮件联系！</p>
+                                <p class="aboutinfo-location">
+                                    <i class="fa fa-clock-o"></i>&nbsp;<span id="time"></span>
+                                </p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <p style="font-size:2em;">沟通交流，拉近你我！</p>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>Leave a message</legend>
+                                    <div class="layui-field-box">
+                                        <div class="leavemessage" style="text-align:initial">
+                                            <form class="layui-form blog-editor" action="">
+                                                <div class="layui-form-item">
+                                                    <textarea name="editorContent" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交留言</button>
+                                                </div>
+                                            </form>
+                                            <ul class="blog-comment">
+                                                <li>
+                                                    <div class="comment-parent">
+                                                        <img src="/static/images/Logo_40.png" alt="不落阁" />
+                                                        <div class="info">
+                                                            <span class="username">好学长</span>
+                                                        </div>
+                                                        <div class="content">
+                                                            我为大家做了模拟留言与回复！试试吧！
+                                                        </div>
+                                                        <p class="info info-footer"><span class="time">2017-03-18 18:09</span><a class="btn-reply" href="javascript:;" onclick="btnReplyClick(this)">回复</a></p>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="comment-child">
+                                                        <img src="/static/images/Absolutely.jpg" alt="Absolutely" />
+                                                        <div class="info">
+                                                            <span class="username">Absolutely</span><span>这是用户回复内容</span>
+                                                        </div>
+                                                        <p class="info"><span class="time">2017-03-18 18:26</span></p>
+                                                    </div>
+                                                    <div class="comment-child">
+                                                        <img src="/static/images/Absolutely.jpg" alt="Absolutely" />
+                                                        <div class="info">
+                                                            <span class="username">Absolutely</span><span>这是第二个用户回复内容</span>
+                                                        </div>
+                                                        <p class="info"><span class="time">2017-03-18 18:26</span></p>
+                                                    </div>
+                                                    <!-- 回复表单默认隐藏 -->
+                                                    <div class="replycontainer layui-hide">
+                                                        <form class="layui-form" action="">
+                                                            <div class="layui-form-item">
+                                                                <textarea name="replyContent" lay-verify="replyContent" placeholder="请输入回复内容" class="layui-textarea" style="min-height:80px;"></textarea>
+                                                            </div>
+                                                            <div class="layui-form-item">
+                                                                <button class="layui-btn layui-btn-mini" lay-submit="formReply" lay-filter="formReply">提交</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--留言墙End-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    <!-- 底部 -->
+{% block js %}
+    <script src="{% static 'js/about.js' %}"></script>
+{% endblock %}

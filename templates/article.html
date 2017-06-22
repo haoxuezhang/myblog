@@ -1,0 +1,256 @@
+﻿{% extends 'base.html' %}
+{% block title %}好学长-博文列表{% endblock %}
+{% load staticfiles %}
+{% block css %}
+<link href="{% static 'css/article.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/pagination.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+<!-- 主体（一般只改变这里的内容） -->
+<div class="blog-body">
+    <div class="blog-container">
+        <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+            <a href="/" title="网站首页">网站首页</a>
+            <a><cite>文章专栏</cite></a>
+        </blockquote>
+        <div class="blog-main">
+            <div class="blog-main-left">
+                {% if find == 1 %}
+                <div class="shadow"
+                     style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">
+                    与【<span style="color: #FF5722;">{{keywords}}</span>】有关的文章！
+                </div>
+                {% elif find == 2%}
+                <div class="shadow"
+                     style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">
+                    未搜索到与【<span style="color: #FF5722;">{{keywords}}</span>】有关的文章，随便看看吧！
+                </div>
+                {% endif %}
+                {% for article in article_list.object_list %}
+                <div class="article shadow">
+                    <div class="article-left">
+                        <img src="{{MEDIA_URL}}{{article.image}}" alt="基于laypage的layui扩展模块（pagesize.js）！"/>
+                    </div>
+                    <div class="article-right">
+                        <div class="article-title">
+                            <a href="{{request.path}}/{{article.id}}">{{article.title}}</a>
+                        </div>
+                        <div class="article-abstract">
+                            {{article.abstract}}
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="article-footer">
+                        <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{article.pub_date|date:"Y-m-d"}}</span>
+                        <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;{{article.author}}</span>
+                        <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a
+                                href="{{request.path }}?category={{article.category_id}}">{{article.category}}</a></span>
+                        <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;{{article.views}}</span>
+                        <span class="article-viewinfo"><i
+                                class="fa fa-commenting"></i>&nbsp;{{article.comment_num}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+                <div class="pa">
+                    <ul class="pa">
+                        <!--<li class="pa"><a href="#">首页</a></li>-->
+                        {% if article_list.has_previous %}
+                        <li class="pa"><a href="?{{ article_list.previous_page_number.querystring }}">上一页</a></li>
+                        {% endif %}
+                        {% for page in article_list.pages %}
+                        {% if page %}
+                        {% ifequal page article_list.number %}
+                        <li class="pa active_pa"><a href="?{{ page.querystring }}">{{page}}</a></li>
+                        {% else %}
+                        <li class="pa"><a href="?{{ page.querystring }}">{{page}}</a></li>
+                        {% endifequal %}
+                        {% else %}
+                        <li class="pa nowd_pa">...</li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if article_list.has_next %}
+                        <li class="pa"><a href="?{{ article_list.next_page_number.querystring }}">下一页</a></li>
+                        {% endif %}
+                        <!--<li class="pa">尾页</li>-->
+                    </ul>
+                </div>
+                <!--<div class="article shadow">-->
+                <!--<div class="article-left">-->
+                <!--<img src="/static/images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
+                <!--</div>-->
+                <!--<div class="article-right">-->
+                <!--<div class="article-title">-->
+                <!--<a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>-->
+                <!--</div>-->
+                <!--<div class="article-abstract">-->
+                <!--该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clear"></div>-->
+                <!--<div class="article-footer">-->
+                <!--<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>-->
+                <!--<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>-->
+                <!--<span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="article shadow">-->
+                <!--<div class="article-left">-->
+                <!--<img src="/static/images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
+                <!--</div>-->
+                <!--<div class="article-right">-->
+                <!--<div class="article-title">-->
+                <!--<a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>-->
+                <!--</div>-->
+                <!--<div class="article-abstract">-->
+                <!--该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clear"></div>-->
+                <!--<div class="article-footer">-->
+                <!--<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>-->
+                <!--<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>-->
+                <!--<span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="article shadow">-->
+                <!--<div class="article-left">-->
+                <!--<img src="/static/images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
+                <!--</div>-->
+                <!--<div class="article-right">-->
+                <!--<div class="article-title">-->
+                <!--<a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>-->
+                <!--</div>-->
+                <!--<div class="article-abstract">-->
+                <!--该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clear"></div>-->
+                <!--<div class="article-footer">-->
+                <!--<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>-->
+                <!--<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>-->
+                <!--<span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="article shadow">-->
+                <!--<div class="article-left">-->
+                <!--<img src="/static/images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
+                <!--</div>-->
+                <!--<div class="article-right">-->
+                <!--<div class="article-title">-->
+                <!--<a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>-->
+                <!--</div>-->
+                <!--<div class="article-abstract">-->
+                <!--该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clear"></div>-->
+                <!--<div class="article-footer">-->
+                <!--<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>-->
+                <!--<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>-->
+                <!--<span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="article shadow">-->
+                <!--<div class="article-left">-->
+                <!--<img src="/static/images/cover/201703181909057125.jpg" alt="基于laypage的layui扩展模块（pagesize.js）！" />-->
+                <!--</div>-->
+                <!--<div class="article-right">-->
+                <!--<div class="article-title">-->
+                <!--<a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>-->
+                <!--</div>-->
+                <!--<div class="article-abstract">-->
+                <!--该模块主要是针对当前版本laypage没有页容量控制功能而制作，使用该模块后即可实现每页显示多少条数据的控制！本人原创，但是可能有可能只对本人的分页写法有用！-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clear"></div>-->
+                <!--<div class="article-footer">-->
+                <!--<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-03-18</span>-->
+                <!--<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Absolutely</span>-->
+                <!--<span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">Web前端</a></span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;0</span>-->
+                <!--<span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>-->
+                <!--</div>-->
+                <!--</div>-->
+
+            </div>
+            <div class="blog-main-right">
+                <div class="blog-search">
+                    <form class="layui-form" method="get" action="/article">
+                        <div class="layui-form-item">
+                            <div class="search-keywords  shadow">
+                                <input type="text" name="keywords" lay-verify="required" placeholder="输入关键词搜索"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="search-submit  shadow">
+                                <a class="search-btn" lay-submit="formSearch" lay-filter="formSearch"><i
+                                        class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <div class="article-category shadow">
+                    <div class="article-category-title">分类导航</div>
+
+                    {% for category in category_list %}
+                    <a href="{{request.path }}?category={{category.id}}">{{category.name}}({{category.num_article_category}})</a>
+                    {% endfor %}
+
+
+                    <div class="clear"></div>
+                </div>
+
+                <div class="article-category shadow">
+                    <div class="article-category-title">标签导航</div>
+
+                    {% for tag in tag_list %}
+                    <a href="{{request.path }}?tag={{tag.id}}">{{tag.name}}({{tag.num_article_tag}})</a>
+                    {% endfor %}
+
+                    <div class="clear"></div>
+                </div>
+
+                <div class="blog-module shadow">
+                    <div class="blog-module-title">作者推荐</div>
+                    <ul class="fa-ul blog-module-ul">
+                        {% for recommend in recommend_list %}
+                        <li><i class="fa-li fa fa-hand-o-right"></i><a href="/article/{{recommend.id}}">{{recommend.title}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="blog-module shadow">
+                    <div class="blog-module-title">猜你喜欢</div>
+                    <ul class="fa-ul blog-module-ul">
+
+                        <!--<li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">一步步制作时光轴（一）（HTML篇）</a></li>-->
+                        <!--<li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">ASP.NET-->
+                            <!--MVC制作404跳转（非302和200）</a></li>-->
+                        <!--<li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">ASP.NET MVC 防范跨站请求伪造（CSRF）</a>-->
+                        <!--</li>-->
+                        <!--<li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">一步步制作时光轴（三）（JS篇）</a></li>-->
+                        <!--<li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">基于laypage的layui扩展模块（pagesize.js）！</a>-->
+                        <!--</li>-->
+                        <!--<li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">一步步制作时光轴（二）（CSS篇）</a></li>-->
+                        <!--<li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">写了个Win10风格快捷菜单！</a></li>-->
+                        <!--<li><i class="fa-li fa fa-hand-o-right"></i><a href="detail.html">常用正则表达式</a></li>-->
+                    </ul>
+                </div>
+                <!--右边悬浮 平板或手机设备显示-->
+                <div class="category-toggle"><i class="fa fa-chevron-left"></i></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

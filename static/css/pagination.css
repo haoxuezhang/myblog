@@ -1,0 +1,29 @@
+
+
+ul.pa, li.pa, div.pa {
+    margin: 0;
+    padding: 0;
+}
+
+ul.pa, li.pa {
+    list-style: none;
+}
+
+li.pa {
+    float: left;
+    margin-left: 5px;
+    padding: 0 8px;
+    border: 1px solid #999;
+    color: #000;
+    line-height: 24px;
+}
+
+.active_pa {
+    color: #fff;
+    background-color: red;
+    border-color: red;
+}
+
+.nowd_pa {
+    border: none;
+}
